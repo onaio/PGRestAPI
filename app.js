@@ -58,8 +58,8 @@ app.use(express.static(path.join(__dirname, 'GPModels')));
 //support for storing authentication credentials
 var passport = { authenticationFunctions: []};
 
+// CORS Options
 var whitelist = settings.cors.whitelist
-console.log(whitelist)
 var corsOptions = {
     origin: function(origin, callback){
     if (origin){
@@ -76,11 +76,10 @@ var corsOptions = {
 app.use(cors(corsOptions));
 app.use(app.router);
 
-
 //Load in all endpoint routes
-//Root Request - show table list
+//Root Request
 app.get('/', passport.authenticationFunctions, function (req, res) {
-  res.redirect('/services');
+  res.send('Ona Vector Tiles Service')
 });
 
 //Keep a list of services that are active
@@ -101,7 +100,7 @@ if (tiles) {
   app.use(tiles.app(passport));
 }
 
-// Disable ALL services endpoint except tiles
+// Disable ALL services endpoint except tiles endpoint
 
 //var tables = require('./endpoints/tables');
 //app.use(tables.app(passport));
