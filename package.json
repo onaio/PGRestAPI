@@ -23,22 +23,23 @@
     "geojson-validation": "0.1.5",
     "jade": "0.35.0",
     "jquery": "2.1.1",
-    "jsdom": "0.10.5",
+    "jsdom": "10.0.0",
     "less-middleware": "0.1.14",
     "lru-cache": "2.5.0",
-    "millstone": "0.6.12",
-    "pg": "3.4.0",
+    "millstone": "0.6.17",
+    "pg": "7.8.1",
     "request": "2.37.0",
     "semver": "2.3.0",
     "shortid": "2.0.1",
+    "sqlite3": "4.0.6",
     "underscore": "1.6.0",
     "ya-csv": "0.9.4"
   },
   "optionalDependencies": {
-    "mapnik": "1.4.15",
+    "mapnik": "4.2.1",
     "carto": "0.11.0",
     "ogr2ogr": "0.3.1",
-    "mbtiles": "0.5.0",
+    "mbtiles": "0.9.0",
     "tilelive": "4.5.3"
   },
   "devDependencies": {
