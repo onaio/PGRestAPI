@@ -21,6 +21,7 @@ settings.pg.username = 'username';
 settings.pg.password = 'password';
 settings.pg.server = '127.0.0.1';
 settings.pg.port = '5432';
+settings.pg.connection_timeout = 4;
 settings.pg.database = 'test';
 settings.pg.featureLimit = 1000; //how many features to return by default
 
