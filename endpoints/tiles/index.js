@@ -276,6 +276,7 @@ exports.app = function (passport) {
 
               'user': settings.pg.username,
               'password': settings.pg.password,
+              'connect_timeout': settings.pg.connection_timeout,
               'type': 'postgis',
               'estimate_extent': 'false',
               'geometry_field': item.geometry_column,
