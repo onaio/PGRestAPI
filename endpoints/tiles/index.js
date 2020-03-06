@@ -1451,7 +1451,9 @@ var createVectorTileRoute = exports.createVectorTileRoute = flow.define(
 
     var _self = this;
 
-    var route = '/services/' + _self.settings.routeProperties.source + '/' + _self.settings.routeProperties.table + (_self.settings.mapnik_datasource.type.toLowerCase() == 'postgis' ? '/' + _self.settings.mapnik_datasource.geometry_field : '') + '/vector-tiles/:z/:x/:y.*';
+    var route = '/services/ona-vector-tiles/:z/:x/:y.*';
+
+    // var route = '/services/' + _self.settings.routeProperties.source + '/' + _self.settings.routeProperties.table + (_self.settings.mapnik_datasource.type.toLowerCase() == 'postgis' ? '/' + _self.settings.mapnik_datasource.geometry_field : '') + '/vector-tiles/:z/:x/:y.*';
 
     //Create Route for this table
     this.app.all(route, cacher.cache('day'), function (req, res) {
@@ -1460,6 +1462,7 @@ var createVectorTileRoute = exports.createVectorTileRoute = flow.define(
       var startTime = Date.now();
 
       var args = common.getArguments(req);
+      console.log("where?????", args)
 
       //If user passes in where clause or fields, then build the query here and set it with the table property of postgis_setting
       if (args.fields || args.where) {

@@ -23,6 +23,10 @@ var pg = require('pg'),
   https = require('https');
   app = express();
 
+app.use(function(req, res, next) {
+  next();
+});
+
 //PostGres Connection String
 global.conString = "postgres://" + settings.pg.username + ":" + settings.pg.password + "@" + settings.pg.server + ":" + settings.pg.port + "/" + settings.pg.database;
 
