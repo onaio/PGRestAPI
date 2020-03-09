@@ -20,11 +20,21 @@ var pg = require('pg'),
   cors = require('cors'),
   fs = require("fs"),
   _ = require("underscore"),
-  https = require('https');
+  https = require('https'),
+  request = require('request'),
   app = express();
 
 app.use(function(req, res, next) {
-  next();
+  const formId = req.query.form_id;
+  const tmpToken = req.query.temp_token;
+  request.get({
+    url: 'http://127.0.0.1:8000/api/v1/forms/' + formId + '.json',
+    headers: {"Authorization":  "TempToken " + tmpToken }
+  }, function (error, response, body) {
+    if (response.statusCode === 200) {
+      next();
+    }
+  });
 });
 
 //PostGres Connection String
