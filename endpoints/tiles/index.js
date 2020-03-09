@@ -173,26 +173,26 @@ exports.app = function (passport) {
 
   var shpName = "";
   //Loop thru shapes and spin up new routes
-  shapefiles.forEach(function (item) {
-    shpName = item.split('.')[0];
+  // shapefiles.forEach(function (item) {
+  //   shpName = item.split('.')[0];
 
-    var tileSettings = { mapnik_datasource: {}, tileSize: { height: 256, width: 256}, routeProperties: { name: "", source: "", geom_field: "", srid: "", cartoFile: "" }};
+  //   var tileSettings = { mapnik_datasource: {}, tileSize: { height: 256, width: 256}, routeProperties: { name: "", source: "", geom_field: "", srid: "", cartoFile: "" }};
 
-    tileSettings.mapnik_datasource = {
-      type: 'shape',
-      file: path.join(shpLocation, item)
-    };
-    tileSettings.routeProperties.name = shpName;
-    tileSettings.routeProperties.table = shpName;
-    tileSettings.routeProperties.srid = 4326;
-    tileSettings.routeProperties.cartoFile = "";
-    tileSettings.routeProperties.source = "shapefile";
-    tileSettings.routeProperties.defaultStyle = "";//The name of the style inside of the xml file
-    tileSettings.routeProperties.performanceObject = ShapeTileStats;
+  //   tileSettings.mapnik_datasource = {
+  //     type: 'shape',
+  //     file: path.join(shpLocation, item)
+  //   };
+  //   tileSettings.routeProperties.name = shpName;
+  //   tileSettings.routeProperties.table = shpName;
+  //   tileSettings.routeProperties.srid = 4326;
+  //   tileSettings.routeProperties.cartoFile = "";
+  //   tileSettings.routeProperties.source = "shapefile";
+  //   tileSettings.routeProperties.defaultStyle = "";//The name of the style inside of the xml file
+  //   tileSettings.routeProperties.performanceObject = ShapeTileStats;
 
-    //createMultiTileRoute(app, tileSettings, MemoryShapeTileStats.MultiTiles);
-    createVectorTileRoute(app, tileSettings, ShapeTileStats.VectorTiles);
-  });
+  //   //createMultiTileRoute(app, tileSettings, MemoryShapeTileStats.MultiTiles);
+  //   createVectorTileRoute(app, tileSettings, ShapeTileStats.VectorTiles);
+  // });
 
   //var geojsonName = "";
   ////Loop thru geojson and spin up new routes
@@ -219,29 +219,29 @@ exports.app = function (passport) {
   //});
 
   var memoryShpName = "";
-  memoryShapefileList.forEach(function (item) {
-    //Also (for performance testing puproses, create in-memory versions of the .shp datasources and spin up a new route for those)
-    memoryShpName = item.split('.')[0];
-    memoryShapefiles[memoryShpName] = createInMemoryDatasource(memoryShpName, memoryShpLocation + "/" + item);
+  // memoryShapefileList.forEach(function (item) {
+  //   //Also (for performance testing puproses, create in-memory versions of the .shp datasources and spin up a new route for those)
+  //   memoryShpName = item.split('.')[0];
+  //   memoryShapefiles[memoryShpName] = createInMemoryDatasource(memoryShpName, memoryShpLocation + "/" + item);
 
-    var tileSettings = { mapnik_datasource: {}, tileSize: { height: 256, width: 256}, routeProperties: { name: "", source: "", geom_field: "", srid: "", cartoFile: "" }};
+  //   var tileSettings = { mapnik_datasource: {}, tileSize: { height: 256, width: 256}, routeProperties: { name: "", source: "", geom_field: "", srid: "", cartoFile: "" }};
 
-    tileSettings.mapnik_datasource = memoryShapefiles[memoryShpName];
-    tileSettings.mapnik_datasource.geometry_type = "point"; //TODO.  Figure this out.
-    tileSettings.mapnik_datasource.type = "point"; //Adding type to maintain consistency with other types.
+  //   tileSettings.mapnik_datasource = memoryShapefiles[memoryShpName];
+  //   tileSettings.mapnik_datasource.geometry_type = "point"; //TODO.  Figure this out.
+  //   tileSettings.mapnik_datasource.type = "point"; //Adding type to maintain consistency with other types.
 
-    tileSettings.routeProperties.name = memoryShpName;
-    tileSettings.routeProperties.table = memoryShpName;
-    tileSettings.routeProperties.srid = 4326;
-    tileSettings.routeProperties.cartoFile = "";
-    tileSettings.routeProperties.source = "shapefile";
-    tileSettings.routeProperties.defaultStyle = "";//The name of the style inside of the xml file
+  //   tileSettings.routeProperties.name = memoryShpName;
+  //   tileSettings.routeProperties.table = memoryShpName;
+  //   tileSettings.routeProperties.srid = 4326;
+  //   tileSettings.routeProperties.cartoFile = "";
+  //   tileSettings.routeProperties.source = "shapefile";
+  //   tileSettings.routeProperties.defaultStyle = "";//The name of the style inside of the xml file
 
 
-    //createMultiTileRoute(app, tileSettings, MemoryShapeTileStats.MultiTiles);
-    //createSingleTileRoute(app, tileSettings, MemoryShapeTileStats.SingleTiles);
-    createVectorTileRoute(app, tileSettings, MemoryShapeTileStats.VectorTiles);
-  });
+  //   //createMultiTileRoute(app, tileSettings, MemoryShapeTileStats.MultiTiles);
+  //   //createSingleTileRoute(app, tileSettings, MemoryShapeTileStats.SingleTiles);
+  //   createVectorTileRoute(app, tileSettings, MemoryShapeTileStats.VectorTiles);
+  // });
 
   var rasterName = "";
   //Loop thru rasters and spin up new routes
@@ -282,12 +282,12 @@ exports.app = function (passport) {
               'srid': item.srid,
               'geometry_type': item.type
             };
-            tileSettings.routeProperties.name = key;
-            tileSettings.routeProperties.table = item.table;
+            tileSettings.routeProperties.name = settings.table.sourceName;
+            tileSettings.routeProperties.table = settings.table.name;
             tileSettings.routeProperties.srid = item.srid;
             tileSettings.routeProperties.cartoFile = "";
             tileSettings.routeProperties.source = "postgis";
-            tileSettings.routeProperties.geom_field = item.geometry_column;
+            tileSettings.routeProperties.geom_field = settings.table.column;
             tileSettings.routeProperties.defaultStyle = "";//The name of the style inside of the xml file
 
             //createMultiTileRoute(app, tileSettings, PGTileStats.MultiTiles);
@@ -1451,7 +1451,7 @@ var createVectorTileRoute = exports.createVectorTileRoute = flow.define(
 
     var _self = this;
 
-    var route = '/services/ona-vector-tiles/:z/:x/:y.*';
+    var route = '/services/vector-tiles/:z/:x/:y.*';
 
     // var route = '/services/' + _self.settings.routeProperties.source + '/' + _self.settings.routeProperties.table + (_self.settings.mapnik_datasource.type.toLowerCase() == 'postgis' ? '/' + _self.settings.mapnik_datasource.geometry_field : '') + '/vector-tiles/:z/:x/:y.*';
 
@@ -1462,7 +1462,9 @@ var createVectorTileRoute = exports.createVectorTileRoute = flow.define(
       var startTime = Date.now();
 
       var args = common.getArguments(req);
-      console.log("where?????", args)
+      var formId = req.query.form_id;
+      args.fields = "id";
+      args.where = "deleted_at is null and xform_id =" + formId;
 
       //If user passes in where clause or fields, then build the query here and set it with the table property of postgis_setting
       if (args.fields || args.where) {

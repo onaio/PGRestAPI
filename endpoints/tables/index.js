@@ -1079,8 +1079,7 @@ exports.app = function (passport) {
 
 
     //Show users about a table's vector tile service
-    app.all('/services/ona-vector-tiles', flow.define(function (req, res) {
-      console.log("request???", req);
+    app.all('/services/vector-tiles', flow.define(function (req, res) {
       this.args = {};
       this.req = req;
       this.res = res;
@@ -1170,9 +1169,8 @@ exports.app = function (passport) {
         this.args.featureCollection = [];
         this.args.featureCollection.push({
           name: "Map Service Endpoint",
-          link: this.protocol + this.args.host + "/services/postgis/" + this.args.table + "/" + this.args.geomcolumn + "/vector-tiles"
+          link: this.protocol + this.args.host + "/services/postgis/" + settings.table.name + "/" + settings.table.column + "/vector-tiles"
         });
-        console.log("feature coll??", this.args.featureCollection);
         this.args.extent = result.rows[0];
 
         //load leaflet
