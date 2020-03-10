@@ -28,11 +28,13 @@ app.use(function(req, res, next) {
   const formId = req.query.form_id;
   const tmpToken = req.query.temp_token;
   request.get({
-    url: 'http://127.0.0.1:8000/api/v1/forms/' + formId + '.json',
+    url: settings.onadata_api_forms_endpoint + formId + '.json',
     headers: {"Authorization":  "TempToken " + tmpToken }
   }, function (error, response, body) {
     if (response.statusCode === 200) {
       next();
+    } else {
+      res.send(401);
     }
   });
 });
