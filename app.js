@@ -27,7 +27,7 @@ var pg = require('pg'),
 app.use(function(req, res, next) {
   const formId = req.query.form_id;
   const tmpToken = req.query.temp_token;
-  if (temp_token) {
+  if (tmpToken) {
     request.get({
       url: settings.onadata_api_forms_endpoint + formId + '.json',
       headers: {"Authorization":  "TempToken " + tmpToken }
