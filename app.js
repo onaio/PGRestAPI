@@ -20,8 +20,28 @@ var pg = require('pg'),
   cors = require('cors'),
   fs = require("fs"),
   _ = require("underscore"),
-  https = require('https');
+  https = require('https'),
+  request = require('request'),
   app = express();
+
+app.use(function(req, res, next) {
+  const formId = req.query.form_id;
+  const tmpToken = req.query.temp_token;
+  if (tmpToken) {
+    request.get({
+      url: settings.onadata_api_forms_endpoint + formId + '.json',
+      headers: {"Authorization":  "TempToken " + tmpToken }
+    }, function (error, response, body) {
+      if (response && response.statusCode === 200) {
+        next();
+      } else {
+        res.send(403, "You dont have sufficient permissions to access resource");
+      }
+    });
+  } else {
+    res.send(401, "Authentication Failure")
+  }
+});
 
 //PostGres Connection String
 global.conString = "postgres://" + settings.pg.username + ":" + settings.pg.password + "@" + settings.pg.server + ":" + settings.pg.port + "/" + settings.pg.database;

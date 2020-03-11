@@ -15,6 +15,14 @@ settings.application.port = 3001;
 //settings.ssl.pfx = 'mypfx.pfx';
 //settings.ssl.password = 'foo';
 
+// custom api configs
+
+settings.onadata_api_forms_endpoint = ""
+
+settings.table.name = "";
+settings.table.column = "";
+settings.table.sourceName = ""
+
 
 //Settings for postgres DB
 settings.pg.username = 'username';

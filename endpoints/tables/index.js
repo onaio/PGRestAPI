@@ -1079,7 +1079,7 @@ exports.app = function (passport) {
 
 
     //Show users about a table's vector tile service
-    app.all('/services/tables/:table/:geomcolumn/vector-tiles', flow.define(function (req, res) {
+    app.all('/services/vector-tiles', flow.define(function (req, res) {
       this.args = {};
       this.req = req;
       this.res = res;
@@ -1094,8 +1094,9 @@ exports.app = function (passport) {
       }
 
       this.args.view = "table_vector_tiles";
-      this.args.table = this.req.params.table;
-      this.args.geomcolumn = this.req.params.geomcolumn;
+      this.args.table = settings.table.name;
+      this.args.geomcolumn = settings.table.column;
+      this.args.formid = this.req.params.formid;
       this.protocol = common.getProtocol(req);
       this.args.breadcrumbs = [
         {
@@ -1144,6 +1145,7 @@ exports.app = function (passport) {
             values: []
           };
         }
+        console.log("query??", query);
         common.executePgQuery(query, this);
       } else {
         //No geom column or no extent or something.
@@ -1167,7 +1169,7 @@ exports.app = function (passport) {
         this.args.featureCollection = [];
         this.args.featureCollection.push({
           name: "Map Service Endpoint",
-          link: this.protocol + this.args.host + "/services/postgis/" + this.args.table + "/" + this.args.geomcolumn + "/vector-tiles"
+          link: this.protocol + this.args.host + "/services/postgis/" + settings.table.name + "/" + settings.table.column + "/vector-tiles"
         });
         this.args.extent = result.rows[0];
 
