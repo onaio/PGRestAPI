@@ -35,11 +35,11 @@ app.use(function(req, res, next) {
       if (response && response.statusCode === 200) {
         next();
       } else {
-        res.send(401);
+        res.send(403, "You dont have sufficient permissions to access resource");
       }
     });
   } else {
-    res.send(404)
+    res.send(401, "Authentication Failure")
   }
 });
 
